@@ -4,10 +4,10 @@ import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
+import java.util.Set;
 
 /**
- * Created by avramesc on 11/4/2016.
+ * Created by ReDI on 11/7/2016.
  */
 
 @Entity
@@ -16,15 +16,12 @@ import javax.persistence.Id;
 @EqualsAndHashCode(of = { "id" })
 @Builder
 @Getter//@Value
-public class Product {
+public class Category {
 
     @Id
     private String id;
 
     private String name;
 
-    private String description;
-
-    private Category category;
+    @Singular private Set<Product> products;
 }
-

@@ -13,12 +13,11 @@ import javax.persistence.Id;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode(of = { "id" })
-@Builder(toBuilder = true)
-
+@Builder
+@Getter//@Value
 public class Attributes {
     @Id
     private String id;
 
     private String name;
-
 }
