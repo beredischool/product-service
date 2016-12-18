@@ -1,9 +1,19 @@
 package org.redischool.product.model;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import java.util.Set;
 
 
 /**
@@ -13,8 +23,8 @@ import javax.persistence.Id;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@EqualsAndHashCode(of = { "id" })
-@Builder
+@EqualsAndHashCode(of = {"id"})
+@Builder(toBuilder = true)
 @Getter//@Value
 public class Product {
 
@@ -25,6 +35,10 @@ public class Product {
 
     private String description;
 
-    private Category category;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "product_category", joinColumns = {@JoinColumn(name = "category_id")},
+            inverseJoinColumns = {@JoinColumn(name = "product_id")})
+    private Set<Category> categories;
+
 }
 
