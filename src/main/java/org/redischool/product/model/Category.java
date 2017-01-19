@@ -6,19 +6,16 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Singular;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import java.util.List;
 
-
 /**
- * Created by avramesc on 11/4/2016.
+ * Created by ReDI on 11/7/2016.
  */
 
 @Entity
@@ -27,22 +24,15 @@ import java.util.List;
 @EqualsAndHashCode(of = {"id"})
 @Builder(toBuilder = true)
 @Getter//@Value
-public class Product {
+public class Category {
 
     @Id
     private String id;
 
     private String name;
 
-    private String description;
-
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "product_category", joinColumns = {@JoinColumn(name = "category_id")},
-            inverseJoinColumns = {@JoinColumn(name = "product_id")})
-    private List<Category> categories;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
-    private List<ProductAttributes> productAttributes;
+    @Singular
+    private List<Product> products;
 
 }
-
