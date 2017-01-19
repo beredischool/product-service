@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ProductService {
@@ -26,6 +27,10 @@ public class ProductService {
     }
 
 
+    public String generateId() {
+        return UUID.randomUUID().toString();
+    }
+
     @Transactional
     public Product saveProduct(Product product) {
         return productRepository.save(product);
@@ -33,7 +38,10 @@ public class ProductService {
 
     @Transactional
     public Product getProduct(String id) {
-        return productRepository.findOne(id);
+        Product product = productRepository.findOne(id);
+        product.getCategories().size();
+        product.getProductAttributes().size();
+        return product;
     }
 
     @Transactional
@@ -42,11 +50,11 @@ public class ProductService {
     }
 
     @Transactional
-    private List<Product> getAllProductsSorted(String sortBy, boolean dir) {
+    public List<Product> getAllProductsSorted(String sortBy, boolean dir) {
         if (dir)
             return new ArrayList<>(productRepository.findAll(new Sort(Sort.Direction.ASC, sortBy)));
-        else
-            return new ArrayList<>(productRepository.findAll(new Sort(Sort.Direction.DESC, sortBy)));
+
+        return new ArrayList<>(productRepository.findAll(new Sort(Sort.Direction.DESC, sortBy)));
     }
 
     @Transactional
@@ -70,5 +78,8 @@ public class ProductService {
         return productsSearchService.searchProductByName(proName);
     }
 
-
+    @Transactional
+    public List<Product> findProductsByAttributeName(String attName) {
+        return productsSearchService.saerchProductsByAttributeName(attName);
+    }
 }

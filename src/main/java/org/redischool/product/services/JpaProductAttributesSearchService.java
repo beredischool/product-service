@@ -2,14 +2,16 @@ package org.redischool.product.services;
 
 import org.redischool.product.model.Attributes;
 import org.redischool.product.model.Product;
+import org.redischool.product.model.ProductAttributes;
 import org.redischool.product.services.repositories.ProductAttributesRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by ReDI on 12/15/2016.
  */
-public class JpaProductAttributesSearchService implements ProductAttributesServiceService {
+public class JpaProductAttributesSearchService implements ProductAttributesSearchService {
     private ProductAttributesRepository productAttributesRepository;
 
     public JpaProductAttributesSearchService(ProductAttributesRepository productAttributesRepository) {
@@ -17,83 +19,118 @@ public class JpaProductAttributesSearchService implements ProductAttributesServi
     }
 
 
+    // find List of Products by Attribute Name
+    // by Attribute Name
     @Override
-    public List<Product> searchProductByAttributeName(String attName) {
-        return productAttributesRepository.findProductByAttributeName(attName);
+    public List<Product> searchProductsByAttributeName(String attName) {
+        List<ProductAttributes> productAttributes = productAttributesRepository.findProductsByAttributeName(attName);
+/*        List<Product> products = new ArrayList<>();
+        for (ProductAttributes pa : productAttributes) {
+            products.add(pa.getProduct());
+        }*/
+        return productAttributes.stream().map(p -> p.getProduct()).collect(Collectors.toList());
     }
 
+    // by Rang Of Attributes Names
     @Override
-    public List<Product> searchProductByAttributesNames(List<String> attNames) {
-        return productAttributesRepository.findProductByAttributesNames(attNames);
+    public List<Product> searchProductsByAttributesNames(List<String> attNames) {
+
+        List<ProductAttributes> productAttributes = productAttributesRepository.findProductsByAttributesNames(attNames);
+
+        return productAttributes.stream().map(p -> p.getProduct()).collect(Collectors.toList());
     }
 
-    @Override
-    public List<Product> searchProductByAttributeId(String attId) {
-        return productAttributesRepository.findProductByAttributeId(attId);
-    }
 
-    @Override
-    public List<Product> searchProductByAttributesIds(List<String> attIds) {
-        return productAttributesRepository.findProductByAttributesIds(attIds);
-    }
-
+    //by Attribute Name und Value
     @Override
     public List<Product> searchProductsByAttributeValueAndName(String attName, String attValue) {
-        return productAttributesRepository.findProductsByAttributeValueAndName(attName, attValue);
+        List<ProductAttributes> productAttributes = productAttributesRepository.findProductsByAttributeValueAndName(attName, attValue);
+        return productAttributes.stream().map(p -> p.getProduct()).collect(Collectors.toList());
     }
 
+    // by Rang Of Attributes Names and Values
     @Override
     public List<Product> searchProductsByAttributesValuesAndNames(List<String> attNames, List<String> attValues) {
-        return productAttributesRepository.findProductsByAttributesValuesAndNames(attNames, attValues);
+        List<ProductAttributes> productAttributes = productAttributesRepository.findProductsByAttributesValuesAndNames(attNames, attValues);
+        return productAttributes.stream().map(p -> p.getProduct()).collect(Collectors.toList());
+        //return new ArrayList<>();
     }
 
+
+    // by Attribute Name and Rang of Values
+    @Override
+    public List<Product> searchProductsByAttributeNameAndRangValues(String attName, List<String> attValues) {
+        List<ProductAttributes> productAttributes = productAttributesRepository.findProductsByAttributeNameAndRangValues(attName, attValues);
+        return productAttributes.stream().map(p -> p.getProduct()).collect(Collectors.toList());
+    }
+
+
+    // find List of Products by Attribute Id
+    // by Attribute Id
+    @Override
+    public List<Product> searchProductsByAttributeId(String attId) {
+        List<ProductAttributes> productAttributes = productAttributesRepository.findProductsByAttributeId(attId);
+        return productAttributes.stream().map(p -> p.getProduct()).collect(Collectors.toList());
+    }
+
+    // by Rang Of Attributes Ids
+    @Override
+    public List<Product> searchProductsByAttributesIds(List<String> attIds) {
+        List<ProductAttributes> productAttributes = productAttributesRepository.findProductsByAttributesIds(attIds);
+        return productAttributes.stream().map(p -> p.getProduct()).collect(Collectors.toList());
+    }
+
+    // by Attribute Id und Value
     @Override
     public List<Product> searchProductsByAttributeValueAndId(String attId, String attValue) {
-        return productAttributesRepository.findProductsByAttributeValueAndId(attId, attValue);
+        List<ProductAttributes> productAttributes = productAttributesRepository.findProductsByAttributeValueAndId(attId, attValue);
+        return productAttributes.stream().map(p -> p.getProduct()).collect(Collectors.toList());
     }
 
+    // by Rang Of Attributes Ids and Values
     @Override
     public List<Product> searchProductsByAttributesValuesAndIds(List<String> attIds, List<String> attValues) {
-        return productAttributesRepository.findProductsByAttributesValuesAndIds(attIds, attValues);
+        List<ProductAttributes> productAttributes = productAttributesRepository.findProductsByAttributesValuesAndIds(attIds, attValues);
+        return productAttributes.stream().map(p -> p.getProduct()).collect(Collectors.toList());
     }
 
+
+    // by Attribute Id and Rang of Values
     @Override
-    public List<Product> searchProductsByAttributeRangName(String attName, String attValue1, String attValue2) {
-        return productAttributesRepository.findProductsByAttributeRangName(attName, attValue1, attValue2);
+    public List<Product> searchProductsByAttributeIdAndRangValues(String attId, List<String> attValues) {
+        List<ProductAttributes> productAttributes = productAttributesRepository.findProductsByAttributeIdAndRangValues(attId, attValues);
+        return productAttributes.stream().map(p -> p.getProduct()).collect(Collectors.toList());
     }
 
-    @Override
-    public List<Product> searchProductsByAttributesRangNames(List<String> attNames, List<String> attValues1, List<String> attValues2) {
-        return productAttributesRepository.findProductsByAttributesRangNames(attNames, attValues1, attValues2);
-    }
 
-    @Override
-    public List<Product> searchProductsByAttributeRangId(String attId, String attValue1, String attValue2) {
-        return productAttributesRepository.findProductsByAttributeRangId(attId, attValue1, attValue2);
-    }
-
-    @Override
-    public List<Product> searchProductsByAttributesRangIds(List<String> attIds, List<String> attValues1, List<String> attValues2) {
-        return productAttributesRepository.findProductsByAttributesRangIds(attIds, attValues1, attValues2);
-    }
-
+    // find Attributes by Product Name
+    // by Product Name
     @Override
     public List<Attributes> searchAttributesByProductName(String proName) {
-        return productAttributesRepository.findAttributesByProductName(proName);
+        List<ProductAttributes> productAttributes = productAttributesRepository.findAttributesByProductName(proName);
+        return productAttributes.stream().map(p -> p.getAttribute()).collect(Collectors.toList());
     }
 
+    // by Rang of Products Names
     @Override
     public List<Attributes> searchAttributesByProductsNames(List<String> proNames) {
-        return productAttributesRepository.findAttributesByProductsNames(proNames);
+        List<ProductAttributes> productAttributes = productAttributesRepository.findAttributesByProductsNames(proNames);
+        return productAttributes.stream().map(p -> p.getAttribute()).collect(Collectors.toList());
     }
 
+    // find Attributes by Product Id
+    // by Product Id
     @Override
     public List<Attributes> searchAttributesByProductId(String proId) {
-        return productAttributesRepository.findAttributesByProductId(proId);
+        List<ProductAttributes> productAttributes = productAttributesRepository.findAttributesByProductId(proId);
+        return productAttributes.stream().map(p -> p.getAttribute()).collect(Collectors.toList());
     }
 
+
+    // by Products Ids
     @Override
     public List<Attributes> searchAttributesByProductsIds(List<String> proIds) {
-        return productAttributesRepository.findAttributesByProductsIds(proIds);
+        List<ProductAttributes> productAttributes = productAttributesRepository.findAttributesByProductsIds(proIds);
+        return productAttributes.stream().map(p -> p.getAttribute()).collect(Collectors.toList());
     }
 }

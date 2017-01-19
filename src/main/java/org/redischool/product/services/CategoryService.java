@@ -43,11 +43,11 @@ public class CategoryService {
     }
 
     @Transactional
-    private List<Category> getAllCategorysSrted(String sortBy, boolean dir) {
+    public List<Category> getAllCategoriesSorted(String sortBy, boolean dir) {
         if (dir)
             return new ArrayList<>(categoryRepository.findAll(new Sort(Sort.Direction.ASC, sortBy)));
-        else
-            return new ArrayList<>(categoryRepository.findAll(new Sort(Sort.Direction.DESC, sortBy)));
+
+        return new ArrayList<>(categoryRepository.findAll(new Sort(Sort.Direction.DESC, sortBy)));
     }
 
     @Transactional
@@ -67,7 +67,7 @@ public class CategoryService {
     }
 
     @Transactional
-    Category findCategoryByName(String catName) {
+    public Category findCategoryByName(String catName) {
         return categorySearchService.searchCategoryByName(catName);
     }
 

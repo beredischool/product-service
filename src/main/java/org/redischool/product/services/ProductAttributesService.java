@@ -15,12 +15,12 @@ import java.util.List;
  */
 public class ProductAttributesService {
     private ProductAttributesRepository productAttributesRepository;
-    private ProductAttributesServiceService productAttributesServiceService;
+    private ProductAttributesSearchService productAttributesSearchService;
 
 
-    public ProductAttributesService(ProductAttributesRepository productAttributesRepository, ProductAttributesServiceService productAttributesServiceService) {
+    public ProductAttributesService(ProductAttributesRepository productAttributesRepository, ProductAttributesSearchService productAttributesSearchService) {
         this.productAttributesRepository = productAttributesRepository;
-        this.productAttributesServiceService = productAttributesServiceService;
+        this.productAttributesSearchService = productAttributesSearchService;
 
     }
 
@@ -39,8 +39,8 @@ public class ProductAttributesService {
     private List<ProductAttributes> getAllProductAttributesSorted(String sortBy, boolean dir) {
         if (dir)
             return new ArrayList<>(productAttributesRepository.findAll(new Sort(Sort.Direction.ASC, sortBy)));
-        else
-            return new ArrayList<>(productAttributesRepository.findAll(new Sort(Sort.Direction.DESC, sortBy)));
+
+        return new ArrayList<>(productAttributesRepository.findAll(new Sort(Sort.Direction.DESC, sortBy)));
     }
 
     @Transactional
@@ -54,84 +54,96 @@ public class ProductAttributesService {
     }
 
 
+    // find List Of Products by Attribute Name
+    // by Attribute Name
     @Transactional
-    public List<Product> findProductByAttributeName(String attName) {
-        return productAttributesServiceService.searchProductByAttributeName(attName);
+    public List<Product> findProductsByAttributeName(String attName) {
+        return productAttributesSearchService.searchProductsByAttributeName(attName);
     }
 
+    // by Rang Of Attributes Names
     @Transactional
-    public List<Product> findProductByAttributesNames(List<String> attNames) {
-        return productAttributesServiceService.searchProductByAttributesNames(attNames);
+    public List<Product> findProductsByAttributesNames(List<String> attNames) {
+        return productAttributesSearchService.searchProductsByAttributesNames(attNames);
     }
 
-    @Transactional
-    public List<Product> findProductByAttributeId(String attId) {
-        return productAttributesServiceService.searchProductByAttributeId(attId);
-    }
 
-    @Transactional
-    public List<Product> findProductByAttributesIds(List<String> attIds) {
-        return productAttributesServiceService.searchProductByAttributesIds(attIds);
-    }
-
+    // by Attribute Name and Value
     @Transactional
     public List<Product> findProductsByAttributeValueAndName(String attName, String attValue) {
-        return productAttributesServiceService.searchProductsByAttributeValueAndName(attName, attValue);
+        return productAttributesSearchService.searchProductsByAttributeValueAndName(attName, attValue);
     }
 
+    // by Rang Of Attributes Names and Values
     @Transactional
     public List<Product> findProductsByAttributesValuesAndNames(List<String> attNames, List<String> attValues) {
-        return productAttributesServiceService.searchProductsByAttributesValuesAndNames(attNames, attValues);
+        return productAttributesSearchService.searchProductsByAttributesValuesAndNames(attNames, attValues);
     }
 
+    // by Attribute Name and Rang of Values
+    @Transactional
+    public List<Product> findProductsByAttributeNameAndRangValues(String attName, List<String> attValues) {
+        return productAttributesSearchService.searchProductsByAttributeNameAndRangValues(attName, attValues);
+    }
+
+
+    // find Products by Attribute Id
+    //by Attribute Id
+    @Transactional
+    public List<Product> findProductsByAttributeId(String attId) {
+        return productAttributesSearchService.searchProductsByAttributeId(attId);
+    }
+
+    // by Rang Of Attributes Ids
+    @Transactional
+    public List<Product> findProductsByAttributesIds(List<String> attIds) {
+        return productAttributesSearchService.searchProductsByAttributesIds(attIds);
+    }
+
+    // by Attribute Id and Value
     @Transactional
     public List<Product> findProductsByAttributeValueAndId(String attId, String attValue) {
-        return productAttributesServiceService.searchProductsByAttributeValueAndId(attId, attValue);
+        return productAttributesSearchService.searchProductsByAttributeValueAndId(attId, attValue);
     }
 
+    // by Rang Of Attributes Ids and Values
     @Transactional
     public List<Product> findProductsByAttributesValuesAndIds(List<String> attIds, List<String> attValues) {
-        return productAttributesServiceService.searchProductsByAttributesValuesAndIds(attIds, attValues);
+        return productAttributesSearchService.searchProductsByAttributesValuesAndIds(attIds, attValues);
     }
 
+    // by Attribute Id and Rang of Values
     @Transactional
-    public List<Product> findProductsByAttributeRangName(String attName, String attValue1, String attValue2) {
-        return productAttributesServiceService.searchProductsByAttributeRangName(attName, attValue1, attValue2);
+    public List<Product> findProductsByAttributeIdAndRangValues(String attId, List<String> attValues) {
+        return productAttributesSearchService.searchProductsByAttributeIdAndRangValues(attId, attValues);
     }
 
-    @Transactional
-    public List<Product> findProductsByAttributesRangNames(List<String> attNames, List<String> attValues1, List<String> attValues2) {
-        return productAttributesServiceService.searchProductsByAttributesRangNames(attNames, attValues1, attValues2);
-    }
 
-    @Transactional
-    public List<Product> findProductsByAttributeRangId(String attId, String attValue1, String attValue2) {
-        return productAttributesServiceService.searchProductsByAttributeRangId(attId, attValue1, attValue2);
-    }
-
-    @Transactional
-    public List<Product> findProductsByAttributesRangIds(List<String> attIds, List<String> attValues1, List<String> attValues2) {
-        return productAttributesServiceService.searchProductsByAttributesRangIds(attIds, attValues1, attValues2);
-    }
-
+    // find Attributes by Product Name
+    // by Product Name
     @Transactional
     public List<Attributes> findAttributesByProductName(String proName) {
-        return productAttributesServiceService.searchAttributesByProductName(proName);
+        return productAttributesSearchService.searchAttributesByProductName(proName);
     }
 
+    // by Rang of Products Names
     @Transactional
     public List<Attributes> findAttributesByProductsNames(List<String> proNames) {
-        return productAttributesServiceService.searchAttributesByProductsNames(proNames);
+        return productAttributesSearchService.searchAttributesByProductsNames(proNames);
     }
 
+
+    // find Attributes by Product Id
+    // by Product Id
     @Transactional
     public List<Attributes> findAttributesByProductId(String proId) {
-        return productAttributesServiceService.searchAttributesByProductId(proId);
+        return productAttributesSearchService.searchAttributesByProductId(proId);
     }
 
+    // by Products Ids
     @Transactional
     public List<Attributes> findindAttributesByProductsIds(List<String> proIds) {
-        return productAttributesServiceService.searchAttributesByProductsIds(proIds);
+        return productAttributesSearchService.searchAttributesByProductsIds(proIds);
     }
 
 }

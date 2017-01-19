@@ -18,6 +18,6 @@ public class JpaAttributeSearchService implements AttributesSearchService {
 
     @Override
     public Attributes searchAttributeByName(String attName) {
-        return attributesRepository.findAttributeByName(attName);
+        return attributesRepository.findByName(attName);
     }
 }

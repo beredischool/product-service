@@ -13,7 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import java.util.Set;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 
 /**
@@ -38,7 +39,10 @@ public class Product {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "product_category", joinColumns = {@JoinColumn(name = "category_id")},
             inverseJoinColumns = {@JoinColumn(name = "product_id")})
-    private Set<Category> categories;
+    private List<Category> categories;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+    private List<ProductAttributes> productAttributes;
 
 }
 

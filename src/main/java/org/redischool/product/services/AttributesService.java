@@ -40,11 +40,11 @@ public class AttributesService {
     }
 
     @Transactional
-    private List<Attributes> getAllAttributesSorted(String sortBy, boolean dir) {
+    public List<Attributes> getAllAttributesSorted(String sortBy, boolean dir) {
         if (dir)
             return new ArrayList<>(attributesRepository.findAll(new Sort(Sort.Direction.ASC, sortBy)));
-        else
-            return new ArrayList<>(attributesRepository.findAll(new Sort(Sort.Direction.DESC, sortBy)));
+
+        return new ArrayList<>(attributesRepository.findAll(new Sort(Sort.Direction.DESC, sortBy)));
     }
 
 
@@ -59,7 +59,7 @@ public class AttributesService {
     }
 
     @Transactional
-    Attributes findCategoryByName(String attName) {
+    public Attributes findAttributeByName(String attName) {
         return attributesSearchService.searchAttributeByName(attName);
     }
 

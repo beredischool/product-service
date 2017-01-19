@@ -72,7 +72,7 @@ public class CategoryRepositoryTest {
         assertEquals(category1, category);
 
         Product products = productRepository.findAll().get(0);
-        Set<Category> categories = new HashSet<>();
+        List<Category> categories = new ArrayList<>();
         categories.add(category);
         categories.add(category1);
         products.toBuilder().categories(categories).build();
@@ -189,7 +189,7 @@ public class CategoryRepositoryTest {
 
         List<Category> categories1 = categoryRepository.findAll();
 
-        categories1.removeAll(categories1);
+        categories1.clear(categories1);
 
         assertEquals(categories1, categories);
     }
